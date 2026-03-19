@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intania 80 – 30 ปี Freshy Again</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6C2BD9;
+    --primary-light: #8B5CF6;
+    --primary-dark: #5521B5;
+    --accent: #F59E0B;
+    --accent-light: #FBBF24;
+    --bg: #0F0A1A;
+    --card: rgba(255,255,255,0.06);
+    --card-hover: rgba(255,255,255,0.10);
+    --text: #F1F0F5;
+    --text-muted: #A8A3B5;
+    --border: rgba(255,255,255,0.12);
+    --success: #10B981;
+    --pink: #EC4899;
+    --gold: #F59E0B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Prompt', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  .bg-effects {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg-effects .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
+  }
+  .bg-effects .orb:nth-child(1) {
+    width: 500px; height: 500px;
+    background: var(--primary);
+    top: -10%; left: -10%;
+    animation-delay: 0s;
+  }
+  .bg-effects .orb:nth-child(2) {
+    width: 400px; height: 400px;
+    background: var(--pink);
+    top: 50%; right: -10%;
+    animation-delay: -7s;
+  }
+  .bg-effects .orb:nth-child(3) {
+    width: 350px; height: 350px;
+    background: var(--accent);
+    bottom: -5%; left: 30%;
+    animation-delay: -14s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(40px, -30px) scale(1.05); }
+    50% { transform: translate(-20px, 40px) scale(0.95); }
+    75% { transform: translate(30px, 20px) scale(1.02); }
+  }
+
+  /* Stars / sparkles */
+  .sparkle-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .sparkle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 0.8; transform: scale(1); }
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hero Section */
+  .hero {
+    text-align: center;
+    padding: 50px 20px 40px;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--pink));
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    animation: fadeInDown 0.6s ease 0.1s both;
+  }
+  .hero h1 .year {
+    background: linear-gradient(135deg, var(--accent), #F97316, var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .subtitle {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    animation: fadeInDown 0.6s ease 0.2s both;
+  }
+  .hero .tagline {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeInDown 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 10px auto 40px;
+    max-width: 360px;
+    animation: fadeIn 0.6s ease 0.4s both;
+  }
+  .progress-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 700;
+    background: var(--card);
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  .progress-step.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-color: var(--primary-light);
+    color: white;
+    box-shadow: 0 0 20px rgba(108, 43, 217, 0.4);
+  }
+  .progress-step.done {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+  }
+  .progress-line {
+    width: 80px; height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    transition: all 0.4s ease;
+  }
+  .progress-line.active {
+    background: linear-gradient(90deg, var(--success), var(--primary));
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Section cards */
+  .section-card {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px 28px;
+    margin-bottom: 24px;
+    display: none;
+    animation: slideUp 0.5s ease;
+  }
+  .section-card.active { display: block; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    margin-bottom: 28px;
+  }
+  .section-number {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-light);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Form elements */
+  .form-group {
+    margin-bottom: 22px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .form-group label .required {
+    color: var(--pink);
+    margin-left: 2px;
+  }
+  .form-group input[type="text"],
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    color: var(--text);
+    font-family: 'Prompt', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  .form-group input[type="text"]:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(108, 43, 217, 0.15);
+    background: rgba(255,255,255,0.09);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.25);
+  }
+  .form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23A8A3B5' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 44px;
+  }
+  .form-group select option {
+    background: #1a1230;
+    color: var(--text);
+  }
+
+  /* Checkbox cards */
+  .checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .checkbox-card {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  .checkbox-card input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+  }
+  .checkbox-card:hover .checkbox-label {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .checkbox-card input:checked ~ .checkbox-label {
+    background: rgba(108, 43, 217, 0.12);
+    border-color: var(--primary-light);
+    box-shadow: 0 0 15px rgba(108, 43, 217, 0.1);
+  }
+  .check-icon {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+  .checkbox-card input:checked ~ .checkbox-label .check-icon {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-color: var(--primary-light);
+  }
+  .checkbox-card input:checked ~ .checkbox-label .check-icon::after {
+    content: '✓';
+    color: white;
+    font-weight: 700;
+  }
+  .checkbox-text {
+    flex: 1;
+  }
+  .checkbox-emoji {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .btn {
+    flex: 1;
+    padding: 16px 24px;
+    border-radius: 16px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+  }
+  .btn-back {
+    background: var(--card);
+    color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    flex: 0.5;
+  }
+  .btn-back:hover {
+    background: var(--card-hover);
+    color: var(--text);
+  }
+  .btn-next {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    box-shadow: 0 4px 20px rgba(108, 43, 217, 0.35);
+  }
+  .btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(108, 43, 217, 0.5);
+  }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--accent), #F97316);
+    color: #1a1230;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+  }
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(245, 158, 11, 0.5);
+  }
+
+  /* Thank you screen */
+  .thank-you {
+    text-align: center;
+    padding: 60px 20px;
+    display: none;
+    animation: scaleIn 0.6s ease;
+  }
+  .thank-you.active { display: block; }
+  .thank-you .emoji-big {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 1s ease infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .thank-you h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .thank-you p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  /* Confetti */
+  .confetti-piece {
+    position: fixed;
+    z-index: 999;
+    pointer-events: none;
+    animation: confettiFall 3s ease forwards;
+  }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(-100vh) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.8rem; }
+    .section-card { padding: 24px 18px; }
+    .progress-line { width: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-effects">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+<div class="sparkle-container" id="sparkles"></div>
+
+<div class="container">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">✨ DESIGN THINKING ✨</div>
+    <h1><span class="year">30</span> ปี มีครั้งเดียว‼️</h1>
+    <p class="subtitle">Intania 80 – 30 ปี Freshy Again</p>
+    <p class="tagline">อยากชวนเพื่อนๆ มาช่วยกันเสนอไอเดีย ที่จะพาพวกเรากลับมาเจอกันอีกครั้ง แบบไหนกันดี ที่จะพาเรามาเจอกันได้เยอะๆ สมกับประวัติศาสตร์ 🎉</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="progress-step active" data-step="1" onclick="goToStep(1)">1</div>
+    <div class="progress-line" id="line1"></div>
+    <div class="progress-step" data-step="2" onclick="goToStep(2)">2</div>
+    <div class="progress-line" id="line2"></div>
+    <div class="progress-step" data-step="3" onclick="goToStep(3)">3</div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section-card active" id="section1">
+    <div class="section-header">
+      <div class="section-number">Section 01</div>
+      <div class="section-title">📋 ข้อมูลพื้นฐาน</div>
+      <div class="section-desc">บอกเราหน่อยว่าเพื่อนคนไหน !</div>
+    </div>
+
+    <div class="form-group">
+      <label>ชื่อจริง <span class="required">*</span></label>
+      <input type="text" id="fname" placeholder="ชื่อจริง">
+    </div>
+    <div class="form-group">
+      <label>ชื่อเล่น <span class="required">*</span></label>
+      <input type="text" id="nickname" placeholder="ชื่อเล่น">
+    </div>
+    <div class="form-group">
+      <label>ภาควิชา <span class="required">*</span></label>
+      <select id="department">
+        <option value="" disabled selected>-- เลือกภาควิชา --</option>
+        <option>วิศวกรรมโยธา (CE)</option>
+        <option>วิศวกรรมไฟฟ้า (EE)</option>
+        <option>วิศวกรรมเครื่องกล (ME)</option>
+        <option>วิศวกรรมอุตสาหการ (IE)</option>
+        <option>วิศวกรรมเคมี (ChemE)</option>
+        <option>วิศวกรรมสิ่งแวดล้อม (EnvE)</option>
+        <option>วิศวกรรมเหมืองแร่และปิโตรเลียม (MinE)</option>
+        <option>วิศวกรรมโลหการ (MetE)</option>
+        <option>วิศวกรรมสำรวจ (SurvE)</option>
+        <option>วิศวกรรมคอมพิวเตอร์ (CP)</option>
+        <option>วิศวกรรมนิวเคลียร์ (NucE)</option>
+        <option>วิศวกรรมแหล่งน้ำ (WRE)</option>
+        <option>อื่นๆ</option>
+      </select>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-next" onclick="nextStep(2)">ถัดไป →</button>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section-card" id="section2">
+    <div class="section-header">
+      <div class="section-number">Section 02</div>
+      <div class="section-title">🎯 รูปแบบกิจกรรมที่คิดว่าน่าสนใจ</div>
+      <div class="section-desc">"ถ้าจัดมา ก็อยากมาจอย" — เลือกได้มากกว่า 1 ข้อ</div>
+    </div>
+
+    <div class="checkbox-grid">
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="walk-rally">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">Walk Rally ในคณะ สำรวจความเปลี่ยนแปลงใหม่ๆ</div>
+          <div class="checkbox-emoji">🚶‍♂️</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="group-photo">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">ถ่ายภาพรวมรุ่นอีกครั้ง "30 ปี รูปรวมรุ่นต้องมา!"</div>
+          <div class="checkbox-emoji">📸</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="talk">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">เสวนา "ฟังเพื่อนตัวตึง มาร่วมเม้าท์มอย"</div>
+          <div class="checkbox-emoji">🎙️</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="sport">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">Fun Sport Day "วัดพลัง วัยเดอะ"</div>
+          <div class="checkbox-emoji">⚽</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="night-party">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">Night Party "โตแล้ว.. ต้องอดทน เพื่อนท้าชน ต้องหมดแก้ว 🍻🍺 ep.2"</div>
+          <div class="checkbox-emoji">🥳</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="activity" value="concert">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">Mini Concert กับศิลปิน 90's 🎤</div>
+          <div class="checkbox-emoji">🎵</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="form-group" style="margin-top: 20px;">
+      <label>💡 ไอเดียกิจกรรมอื่นๆ ระดมมาเลย!</label>
+      <textarea id="activityOther" placeholder="พิมพ์ไอเดียเพิ่มเติมได้ตรงนี้เลย..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="nextStep(1)">← กลับ</button>
+      <button class="btn btn-next" onclick="nextStep(3)">ถัดไป →</button>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section-card" id="section3">
+    <div class="section-header">
+      <div class="section-number">Section 03</div>
+      <div class="section-title">🛍️ อยากซื้อของที่ระลึกอะไรกันบ้าง</div>
+      <div class="section-desc">เลือกได้หลายอย่าง ยิ่งเยอะยิ่งดี!</div>
+    </div>
+
+    <div class="checkbox-grid">
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="tshirt">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">เสื้อยืดรุ่น</div>
+          <div class="checkbox-emoji">👕</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="polo">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">เสื้อโปโลรุ่น</div>
+          <div class="checkbox-emoji">👔</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="sport-shirt">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">เสื้อกีฬารุ่น</div>
+          <div class="checkbox-emoji">🏃</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="cap">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">หมวก</div>
+          <div class="checkbox-emoji">🧢</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="umbrella">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">ร่ม</div>
+          <div class="checkbox-emoji">☂️</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="tote">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">กระเป๋าผ้า</div>
+          <div class="checkbox-emoji">👜</div>
+        </div>
+      </label>
+      <label class="checkbox-card">
+        <input type="checkbox" name="merch" value="mug">
+        <div class="checkbox-label">
+          <div class="check-icon"></div>
+          <div class="checkbox-text">แก้วกาแฟ</div>
+          <div class="checkbox-emoji">☕</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="form-group" style="margin-top: 20px;">
+      <label>💡 ไอเดียของที่ระลึกอื่นๆ ระดมมาเลย!</label>
+      <textarea id="merchOther" placeholder="พิมพ์ไอเดียเพิ่มเติมได้ตรงนี้เลย..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="nextStep(2)">← กลับ</button>
+      <button class="btn btn-submit" onclick="submitForm()">🎉 ส่งคำตอบ</button>
+    </div>
+  </div>
+
+  <!-- Thank You -->
+  <div class="thank-you" id="thankYou">
+    <div class="emoji-big">🎊</div>
+    <h2>ขอบคุณมากๆ เพื่อน!</h2>
+    <p>ไอเดียของเพื่อนจะถูกนำไปรวมกับเพื่อนคนอื่นๆ<br>เพื่อออกแบบงาน Reunion ที่ดีที่สุดของพวกเรา!</p>
+    <p style="margin-top: 20px; font-size: 1.3rem;">Intania 80 – 30 ปี Freshy Again 🎓✨</p>
+  </div>
+</div>
+
+<script>
+  // Sparkles
+  const sparkleContainer = document.getElementById('sparkles');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    s.style.width = s.style.height = (Math.random() * 3 + 1) + 'px';
+    sparkleContainer.appendChild(s);
+  }
+
+  let currentStep = 1;
+
+  function goToStep(step) {
+    if (step > currentStep) return;
+    nextStep(step);
+  }
+
+  function nextStep(step) {
+    // Hide all
+    document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+    // Show target
+    const target = document.getElementById('section' + step);
+    if (target) {
+      target.classList.add('active');
+      target.style.animation = 'none';
+      target.offsetHeight;
+      target.style.animation = 'slideUp 0.5s ease';
+    }
+
+    // Update progress
+    document.querySelectorAll('.progress-step').forEach((el, i) => {
+      const s = i + 1;
+      el.classList.remove('active', 'done');
+      if (s === step) el.classList.add('active');
+      else if (s < step) el.classList.add('done');
+    });
+    document.getElementById('line1').classList.toggle('active', step > 1);
+    document.getElementById('line2').classList.toggle('active', step > 2);
+
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitForm() {
+    // Collect form data
+    const activities = [];
+    document.querySelectorAll('input[name="activity"]:checked').forEach(cb => {
+      activities.push(cb.closest('.checkbox-card').querySelector('.checkbox-text').textContent.trim());
+    });
+    const merch = [];
+    document.querySelectorAll('input[name="merch"]:checked').forEach(cb => {
+      merch.push(cb.closest('.checkbox-card').querySelector('.checkbox-text').textContent.trim());
+    });
+
+    const payload = {
+      fname: document.getElementById('fname').value,
+      nickname: document.getElementById('nickname').value,
+      department: document.getElementById('department').value,
+      activities: activities,
+      activityOther: document.getElementById('activityOther').value,
+      merch: merch,
+      merchOther: document.getElementById('merchOther').value
+    };
+
+    // Send to Google Sheets
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzO5AI5pyE-HhXlQzD_RSOh1_oB699-4R9zqR5LJYgQoZ6l8N6P-TdIHzZVLxo2xnk9/exec';
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    // Hide sections
+    document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+    document.querySelector('.progress-bar').style.display = 'none';
+
+    // Show thank you
+    document.getElementById('thankYou').classList.add('active');
+
+    // Confetti!
+    launchConfetti();
+  }
+
+  function launchConfetti() {
+    const colors = ['#6C2BD9', '#F59E0B', '#EC4899', '#10B981', '#3B82F6', '#F97316'];
+    for (let i = 0; i < 60; i++) {
+      setTimeout(() => {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.width = (Math.random() * 10 + 6) + 'px';
+        piece.style.height = (Math.random() * 10 + 6) + 'px';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        piece.style.animationDelay = '0s';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 4000);
+      }, i * 30);
+    }
+  }
+</script>
+
+</body>
+</html>
